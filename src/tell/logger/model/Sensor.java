@@ -106,16 +106,15 @@ public class Sensor {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\nModel     : " + model);
-		sb.append("\nId        : " + id);
-		sb.append("\nLogTime   : " + logTime);
-		sb.append("\nLastUpdate: " + lastUpdate);
-		if (humidity != null) {
-			sb.append("\nHumidity: " + humidity);
-		}
+		sb.append("\nId        : " + id + "(" + model + ")");
+		sb.append("\nLogTime   : " + logTime + "(LastUpdate: " + lastUpdate + ")");
 		if (temp != null) {
 			sb.append("\nTemp    : " + temp);
 		}
+		if (humidity != null) {
+			sb.append("\nHumidity: " + humidity);
+		}
+
 		return sb.toString();
 	}
 
