@@ -3,6 +3,7 @@ package tell.logger;
 import tell.logger.api.TellStickDuo;
 import tell.logger.dao.JdbcSQLite;
 import tell.logger.tasks.LogSensors;
+import tell.logger.tasks.RoofFan;
 
 public class TellController {
 
@@ -25,5 +26,10 @@ public class TellController {
 	public void runSensorTask() {
 		LogSensors logSensors = new LogSensors(duo, db);
 		logSensors.execute();
+	}
+
+	public void runRoofHumidity() {
+		RoofFan roofFan = new RoofFan(duo);
+		roofFan.execute();
 	}
 }

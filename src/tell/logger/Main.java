@@ -18,6 +18,8 @@ public class Main {
 
 		if (args[0].equals(Tasks.LOG_SENSORS.name())) {
 			tellController.runSensorTask();
+		} else if (args[0].equals(Tasks.ROOF_HUMIDITY.name())) {
+			tellController.runRoofHumidity();
 		} else if (args[0].equals(Tasks.SETUP_DB.name())) {
 			tellController.createDbTables();
 		} else {
