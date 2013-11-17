@@ -108,14 +108,10 @@ public class Sensor {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\nId        : " + id + "(" + model + ")");
 		sb.append("\nLogTime   : " + logTime + "(LastUpdate: " + lastUpdate + ")");
-		if (temp != null) {
-			sb.append("\nTemp    : " + temp);
-		}
-		if (humidity != null) {
-			sb.append("\nHumidity: " + humidity);
-		}
-
+		sb.append("\nTemp      : " + temp);
+		sb.append("\nHumidity  : " + humidity);
+		sb.append("\nAbsHum    : " + getAbsoluteHumidity());
+		
 		return sb.toString();
 	}
-
 }
