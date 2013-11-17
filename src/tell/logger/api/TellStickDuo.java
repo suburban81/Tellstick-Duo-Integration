@@ -12,8 +12,11 @@ import com.sun.jna.ptr.IntByReference;
 
 public class TellStickDuo {
 
-	//TellLibrary lib = (TellLibrary) Native.loadLibrary("TelldusCore", TellLibrary.class);
-	TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
+	//Windows
+	TellLibrary lib = (TellLibrary) Native.loadLibrary("TelldusCore", TellLibrary.class);
+	
+	//Unix
+	//TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public List<Sensor> querySensors(Date logTime) {

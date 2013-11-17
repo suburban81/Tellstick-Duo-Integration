@@ -12,6 +12,7 @@ public class Sensor {
 		map.put("11", "Källare");
 		map.put("12", "Entreplan");
 		map.put("104", "Vind");
+		map.put("135", "Ute tak");
 		DISPLAYNAMES = Collections.unmodifiableMap(map);
 	}
 
@@ -75,6 +76,31 @@ public class Sensor {
 
 	public void setLastUpdate(String lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	public Double getAbsoluteHumidity() {
+		if (temp != null && humidity != null) {
+			Double thisTemp = Double.valueOf(temp);
+			Double relativeHumidity = Double.valueOf(humidity);
+
+			return calcAbsoluteHumidity(thisTemp, relativeHumidity);
+		}
+		return null;
+	}
+
+	public Double calcAbsoluteHumidity(Double temp, Double relativeHumidity) {
+		Double absoluteHumitidty = calcMaxAbsoluteHumidity(temp) * relativeHumidity / 100;
+
+		return absoluteHumitidty;
+
+	}
+
+	public Double calcMaxAbsoluteHumidity(Double temp) {
+		Double base = 1.098 + temp / 100.0;
+		Double tmp = Math.pow(base, 8.02f);
+		Double maxHumidity = 288.68 * tmp * 1 / (461.4 * (temp + 273.15));
+
+		return maxHumidity * 1000;
 	}
 
 	@Override
