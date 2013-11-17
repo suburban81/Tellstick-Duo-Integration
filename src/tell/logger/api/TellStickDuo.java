@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import tell.logger.Main;
 import tell.logger.model.Sensor;
 
 import com.sun.jna.Native;
@@ -12,15 +15,17 @@ import com.sun.jna.ptr.IntByReference;
 
 public class TellStickDuo {
 
+	private static final Logger log = Logger.getLogger(Main.class);
+	
 	//Windows
-	TellLibrary lib = (TellLibrary) Native.loadLibrary("TelldusCore", TellLibrary.class);
+	private TellLibrary lib = (TellLibrary) Native.loadLibrary("TelldusCore", TellLibrary.class);
 	
 	//Unix
-	//TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
-	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	//private TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public List<Sensor> querySensors(Date logTime) {
-		System.out.println("Start query sensors");
+		log.debug("Start query sensors");
 
 		List<Sensor> sensors = new ArrayList<Sensor>();
 		lib.tdInit();
@@ -38,8 +43,6 @@ public class TellStickDuo {
 			sensor.setModel(Native.toString(protocol) + " " + Native.toString(model));
 			sensor.setLogTime(dateFormat.format(logTime));
 
-			System.out.println("Datatypes: " + dataTypes.getValue());
-
 			Date lastUpdate = null;
 
 			byte value[] = new byte[20];
@@ -56,7 +59,7 @@ public class TellStickDuo {
 			}
 
 			sensor.setLastUpdate(dateFormat.format(lastUpdate));
-			System.out.println(sensor.toString());
+			log.info(sensor.toString());
 			sensors.add(sensor);
 		}
 

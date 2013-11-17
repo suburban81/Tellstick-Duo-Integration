@@ -4,11 +4,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import tell.logger.Main;
 import tell.logger.api.TellStickDuo;
 import tell.logger.dao.JdbcSQLite;
 import tell.logger.model.Sensor;
 
-public class LogSensors{
+public class LogSensors {
+
+	private static final Logger log = Logger.getLogger(Main.class);
 
 	private TellStickDuo duo;
 	private JdbcSQLite db;
@@ -20,13 +25,13 @@ public class LogSensors{
 	}
 
 	public void execute() {
-		System.out.println("\n-- Started task LogSensors --");
+		log.info("-- Started task LogSensors --");
 		List<Sensor> sensors = duo.querySensors(getHourDate());
 
 		for (Sensor sensor : sensors) {
 			db.logSensor(sensor);
 		}
-		System.out.println("-- Finished task LogSensors --");
+		log.debug("-- Finished task LogSensors --");
 	}
 
 	private Date getHourDate() {

@@ -1,5 +1,5 @@
 package tell.logger.tasks;
 
 public enum Tasks {
-	LOG_SENSORS, ROOF_HUMIDITY
+	LOG_SENSORS, ROOF_HUMIDITY, SETUP_DB;
 }

@@ -16,7 +16,9 @@ public class TellController {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+	}
 
+	public void createDbTables() {
 		db.setupDb();
 	}
 
