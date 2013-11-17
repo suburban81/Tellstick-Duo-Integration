@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import tell.logger.Main;
 import tell.logger.model.Sensor;
 
 import com.sun.jna.Native;
@@ -15,13 +14,14 @@ import com.sun.jna.ptr.IntByReference;
 
 public class TellStickDuo {
 
-	private static final Logger log = Logger.getLogger(Main.class);
-	
-	//Windows
-	private TellLibrary lib = (TellLibrary) Native.loadLibrary("TelldusCore", TellLibrary.class);
-	
-	//Unix
-	//private TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
+	private static final Logger log = Logger.getLogger(TellStickDuo.class);
+
+	// Windows
+	// private TellLibrary lib = (TellLibrary) Native.loadLibrary("TelldusCore",
+	// TellLibrary.class);
+
+	// Unix
+	private TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public List<Sensor> querySensors(Date logTime) {

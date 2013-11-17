@@ -6,14 +6,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import tell.logger.Main;
 import tell.logger.api.TellStickDuo;
 import tell.logger.dao.JdbcSQLite;
 import tell.logger.model.Sensor;
 
 public class LogSensors {
 
-	private static final Logger log = Logger.getLogger(Main.class);
+	private static final Logger log = Logger.getLogger(LogSensors.class);
 
 	private TellStickDuo duo;
 	private JdbcSQLite db;
