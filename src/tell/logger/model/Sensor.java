@@ -125,7 +125,7 @@ public class Sensor {
 
 	public boolean updatedLastMinutes(int minutes) {
 		Calendar firstAllowedDate = Calendar.getInstance();
-		firstAllowedDate.add(Math.abs(minutes) * -1, Calendar.MINUTE);
+		firstAllowedDate.add(Calendar.MINUTE, Math.abs(minutes) * -1);
 
 		Date lastUpdateDate;
 
@@ -134,7 +134,6 @@ public class Sensor {
 		} catch (ParseException e) {
 			return false;
 		}
-		
 		return firstAllowedDate.after(lastUpdateDate);
 	}
 }

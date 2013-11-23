@@ -16,14 +16,20 @@ public class Main {
 	public static void main(String[] args) {
 		TellController tellController = new TellController();
 
-		if (args[0].equals(Tasks.LOG_SENSORS.name())) {
-			tellController.runSensorTask();
-		} else if (args[0].equals(Tasks.ROOF_HUMIDITY.name())) {
-			tellController.runRoofHumidity();
-		} else if (args[0].equals(Tasks.SETUP_DB.name())) {
-			tellController.createDbTables();
-		} else {
-			log.warn("Did not find any match for: " + args[0]);
+		try {
+
+			if (args[0].equals(Tasks.LOG_SENSORS.name())) {
+				tellController.runSensorTask();
+			} else if (args[0].equals(Tasks.ROOF_HUMIDITY.name())) {
+				tellController.runRoofHumidity();
+			} else if (args[0].equals(Tasks.SETUP_DB.name())) {
+				tellController.createDbTables();
+			} else {
+				log.warn("Did not find any match for: " + args[0]);
+			}
+		} catch (Exception e) {
+			log.error("Fail due to unexpected error: " + e);
+			throw e;
 		}
 	}
 }
