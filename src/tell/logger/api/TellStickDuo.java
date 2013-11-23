@@ -22,7 +22,9 @@ public class TellStickDuo {
 
 	// Unix
 	private TellLibrary lib = (TellLibrary) Native.loadLibrary("libtelldus-core.so.2", TellLibrary.class);
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	public static final String SENSOR_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	private SimpleDateFormat dateFormat = new SimpleDateFormat(SENSOR_DATE_FORMAT);
 
 	public List<Sensor> querySensors(Date logTime) {
 		log.debug("Start query sensors");

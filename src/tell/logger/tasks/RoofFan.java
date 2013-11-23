@@ -1,11 +1,13 @@
 package tell.logger.tasks;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import tell.logger.api.TellStickDuo;
+import tell.logger.exec.SystemCommandExecutor;
 import tell.logger.model.Sensor;
 
 public class RoofFan {
@@ -32,19 +34,54 @@ public class RoofFan {
 			}
 		}
 
+		SystemCommandExecutor exec = null;
+
+		List<String> commands = new LinkedList<String>();
+		commands.add("tdtool");
 		if (betterOutside(roof, outside)) {
-			// here we shall start fan
+			commands.add("--on");
+			commands.add("5");
+			exec = new SystemCommandExecutor(commands);
+			if (!"Turning on device 5, Vind flakt - Success".equals(exec.getStandardOutputFromCommand().toString())) {
+				log.error("Unexpected answer from exec roof fan! " + exec.getStandardOutputFromCommand().toString());
+			}
 		} else {
-			// here we shall stop fan
+			commands.add("--off");
+			commands.add("5");
+			exec = new SystemCommandExecutor(commands);
+			if (!"Turning off device 5, Vind flakt - Success".equals(exec.getStandardOutputFromCommand().toString())) {
+				log.error("Unexpected answer from exec roof fan! " + exec.getStandardOutputFromCommand().toString());
+			}
+		}
+
+		if (!"".equals(exec.getStandardErrorFromCommand().toString())) {
+			log.error("Unexpected answer from exec roof fan! " + exec.getStandardErrorFromCommand().toString());
 		}
 	}
 
 	private boolean betterOutside(Sensor roof, Sensor outside) {
+		String errorMsg = "";
+		if (roof.updatedLastMinutes(40)) {
+			errorMsg.concat(" Roof sensor where not updated.");
+		}
+		if (outside.updatedLastMinutes(10)) {
+			errorMsg.concat(" Outside sensor where not updated.");
+		}
 		if (roof.getAbsoluteHumidity() > outside.getAbsoluteHumidity()) {
-			log.debug("Better outside, start fan");
-			return true;
+			if (errorMsg.equals("")) {
+				log.debug("Better outside, start fan");
+				return true;
+			} else {
+				log.error("Better outside, would started fan: " + errorMsg);
+				return false;
+			}
 		} else {
-			log.debug("Better inside, stop fan");
+			if (errorMsg.equals("")) {
+				log.debug("Better inside, stop fan");
+			} else {
+				log.error("Better inside, will stop fan but: " + errorMsg);
+			}
+
 			return false;
 		}
 	}

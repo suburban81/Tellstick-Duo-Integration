@@ -1,10 +1,19 @@
 package tell.logger.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import tell.logger.api.TellStickDuo;
+
 public class Sensor {
+
+	// 2013-11-23 00:01:34
+	private final static SimpleDateFormat sdf = new SimpleDateFormat(TellStickDuo.SENSOR_DATE_FORMAT);
 
 	public final static Map<String, String> DISPLAYNAMES;
 	static {
@@ -112,5 +121,20 @@ public class Sensor {
 		sb.append("\nAbsHum    : " + getAbsoluteHumidity());
 
 		return sb.toString();
+	}
+
+	public boolean updatedLastMinutes(int minutes) {
+		Calendar firstAllowedDate = Calendar.getInstance();
+		firstAllowedDate.add(Math.abs(minutes) * -1, Calendar.MINUTE);
+
+		Date lastUpdateDate;
+
+		try {
+			lastUpdateDate = sdf.parse(lastUpdate);
+		} catch (ParseException e) {
+			return false;
+		}
+		
+		return firstAllowedDate.after(lastUpdateDate);
 	}
 }
