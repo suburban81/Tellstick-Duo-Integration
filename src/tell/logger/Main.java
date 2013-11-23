@@ -12,8 +12,9 @@ public class Main {
 	 * args 0 - Task to run
 	 * 
 	 * @param args
+	 * @throws Exception
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		TellController tellController = new TellController();
 
 		try {
@@ -28,7 +29,7 @@ public class Main {
 				log.warn("Did not find any match for: " + args[0]);
 			}
 		} catch (Exception e) {
-			log.error("Fail due to unexpected error: " + e);
+			log.error("Fail due to unexpected error: " + e, e);
 			throw e;
 		}
 	}

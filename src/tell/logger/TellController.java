@@ -1,5 +1,7 @@
 package tell.logger;
 
+import java.io.IOException;
+
 import tell.logger.api.TellStickDuo;
 import tell.logger.dao.JdbcSQLite;
 import tell.logger.tasks.LogSensors;
@@ -28,7 +30,7 @@ public class TellController {
 		logSensors.execute();
 	}
 
-	public void runRoofHumidity() {
+	public void runRoofHumidity() throws IOException, InterruptedException {
 		RoofFan roofFan = new RoofFan(duo);
 		roofFan.execute();
 	}
