@@ -35,13 +35,7 @@ public abstract class RoofFan {
 			}
 		}
 
-		if (roof.getTempDouble() < -0.5) {
-			log.info("To cold on roof to run fan");
-			return;
-		}
-
-		if (outside.getTempDouble() < 0) {
-			log.info("To cold outside to run fan");
+		if (!hasBasicRequirements(roof, outside)) {
 			return;
 		}
 
@@ -73,6 +67,27 @@ public abstract class RoofFan {
 		if (!"".equals(exec.getStandardErrorFromCommand().toString())) {
 			log.error("Unexpected answer from exec roof fan! " + exec.getStandardErrorFromCommand().toString());
 		}
+	}
+
+	private boolean hasBasicRequirements(Sensor roof, Sensor outside) {
+		if (roof.updatedLastMinutes(40)) {
+			log.error("Roof sensor has not been updated, could not run fan");
+			return false;
+		}
+		if (outside.updatedLastMinutes(10)) {
+			log.error("Outside sensor has not been updated, could not run fan");
+			return false;
+		}
+		if (roof.getTempDouble() < -0.5) {
+			log.info("To cold on roof to run fan");
+			return false;
+		}
+		if (outside.getTempDouble() < 0) {
+			log.info("To cold outside to run fan");
+			return false;
+		}
+
+		return true;
 	}
 
 	protected abstract boolean betterOutside(Sensor roof, Sensor outside);

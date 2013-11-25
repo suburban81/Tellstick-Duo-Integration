@@ -23,6 +23,8 @@ public class Main {
 				tellController.runSensorTask();
 			} else if (args[0].equals(Tasks.ROOF_HUMIDITY.name())) {
 				tellController.runRoofHumidity();
+			} else if (args[0].equals(Tasks.ROOF_HUMIDITY_TEMP_CONTROL.name())) {
+				tellController.runRoofHumidityTempControl();
 			} else if (args[0].equals(Tasks.SETUP_DB.name())) {
 				tellController.createDbTables();
 			} else {

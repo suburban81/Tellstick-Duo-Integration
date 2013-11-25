@@ -7,6 +7,7 @@ import tell.logger.dao.JdbcSQLite;
 import tell.logger.tasks.LogSensors;
 import tell.logger.tasks.RoofFan;
 import tell.logger.tasks.RoofFanDefault;
+import tell.logger.tasks.RoofFanTemperatureControl;
 
 public class TellController {
 
@@ -33,6 +34,11 @@ public class TellController {
 
 	public void runRoofHumidity() throws IOException, InterruptedException {
 		RoofFan roofFan = new RoofFanDefault(duo);
+		roofFan.execute();
+	}
+
+	public void runRoofHumidityTempControl() throws IOException, InterruptedException {
+		RoofFan roofFan = new RoofFanTemperatureControl(duo);
 		roofFan.execute();
 	}
 }
