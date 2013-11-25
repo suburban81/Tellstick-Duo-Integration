@@ -87,9 +87,13 @@ public class Sensor {
 		this.lastUpdate = lastUpdate;
 	}
 
+	public Double getTempDouble() {
+		return (temp == null) ? null : Double.valueOf(temp);
+	}
+
 	public Double getAbsoluteHumidity() {
-		if (temp != null && humidity != null) {
-			Double thisTemp = Double.valueOf(temp);
+		if (getTempDouble() != null && humidity != null) {
+			Double thisTemp = getTempDouble();
 			Double relativeHumidity = Double.valueOf(humidity);
 
 			return calcAbsoluteHumidity(thisTemp, relativeHumidity);

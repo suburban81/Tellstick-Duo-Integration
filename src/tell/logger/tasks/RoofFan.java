@@ -11,9 +11,9 @@ import tell.logger.api.TellStickDuo;
 import tell.logger.exec.SystemCommandExecutor;
 import tell.logger.model.Sensor;
 
-public class RoofFan {
+public abstract class RoofFan {
 
-	private static final Logger log = Logger.getLogger(RoofFan.class);
+	protected static final Logger log = Logger.getLogger(RoofFan.class);
 
 	private TellStickDuo duo;
 
@@ -35,6 +35,16 @@ public class RoofFan {
 			}
 		}
 
+		if (roof.getTempDouble() < -0.5) {
+			log.info("To cold on roof to run fan");
+			return;
+		}
+
+		if (outside.getTempDouble() < 0) {
+			log.info("To cold outside to run fan");
+			return;
+		}
+
 		SystemCommandExecutor exec = null;
 		int result = -9999;
 
@@ -53,42 +63,18 @@ public class RoofFan {
 			commands.add("5");
 			exec = new SystemCommandExecutor(commands);
 			result = exec.executeCommand();
-			
+
 			if (!"Turning off device 5, Vind flakt - Success\n".equals(exec.getStandardOutputFromCommand().toString())) {
 				log.error("Unexpected answer from exec roof fan! " + exec.getStandardOutputFromCommand().toString());
 			}
 		}
-		
+
 		log.debug("Result from exec: " + result);
 		if (!"".equals(exec.getStandardErrorFromCommand().toString())) {
 			log.error("Unexpected answer from exec roof fan! " + exec.getStandardErrorFromCommand().toString());
 		}
 	}
 
-	private boolean betterOutside(Sensor roof, Sensor outside) {
-		String errorMsg = "";
-		if (roof.updatedLastMinutes(40)) {
-			errorMsg.concat(" Roof sensor where not updated.");
-		}
-		if (outside.updatedLastMinutes(10)) {
-			errorMsg.concat(" Outside sensor where not updated.");
-		}
-		if (roof.getAbsoluteHumidity() > outside.getAbsoluteHumidity()) {
-			if (errorMsg.equals("")) {
-				log.debug("Better outside, start fan");
-				return true;
-			} else {
-				log.error("Better outside, would started fan: " + errorMsg);
-				return false;
-			}
-		} else {
-			if (errorMsg.equals("")) {
-				log.debug("Better inside, stop fan");
-			} else {
-				log.error("Better inside, will stop fan but: " + errorMsg);
-			}
+	protected abstract boolean betterOutside(Sensor roof, Sensor outside);
 
-			return false;
-		}
-	}
 }
