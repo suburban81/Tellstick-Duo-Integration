@@ -12,7 +12,7 @@ public class RoofFanTemperatureControl extends RoofFan {
 	@Override
 	protected boolean betterOutside(Sensor roof, Sensor outside) {
 		Double howMuchDrierOutside = roof.getAbsoluteHumidity() - outside.getAbsoluteHumidity();
-		Double howMuchVarmerOutside = roof.getTempDouble() - outside.getTempDouble();
+		Double howMuchVarmerOutside = outside.getTempDouble() - roof.getTempDouble();
 		if (roof.getTempDouble() < 5) {
 			return winterTimeFan(howMuchDrierOutside, howMuchVarmerOutside);
 		} else if (roof.getTempDouble() < 20) {
