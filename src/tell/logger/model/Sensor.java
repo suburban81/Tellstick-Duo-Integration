@@ -58,6 +58,10 @@ public class Sensor {
 	public String getHumidity() {
 		return humidity;
 	}
+	
+	public Double getHumidityDouble() {
+		return Double.valueOf(humidity);
+	}
 
 	public void setHumidity(String humidity) {
 		this.humidity = humidity;

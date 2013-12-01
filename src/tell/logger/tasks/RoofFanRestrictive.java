@@ -3,11 +3,11 @@ package tell.logger.tasks;
 import tell.logger.api.TellStickDuo;
 import tell.logger.model.Sensor;
 
-public class RoofFanTemperatureControl extends RoofFan {
+public class RoofFanRestrictive extends RoofFan {
 
-	private static final String PREFIX = "FAN-TMP ";
+	private static final String PREFIX = "FAN-RES ";
 
-	public RoofFanTemperatureControl(TellStickDuo duo) {
+	public RoofFanRestrictive(TellStickDuo duo) {
 		super(duo);
 	}
 
@@ -25,15 +25,15 @@ public class RoofFanTemperatureControl extends RoofFan {
 	}
 
 	private boolean winterTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 1.5) {
+		if (howMuchDrierOutside > 3) {
 			log.debug(PREFIX + "Lot better outside, start fan");
 		}
-		if (howMuchDrierOutside > 0) {
+		if (howMuchDrierOutside > 1.5) {
 			if (howMuchVarmerOutside > 0) {
 				log.debug(PREFIX + "Better and warmer outside, start fan");
 				return true;
 			} else {
-				log.debug(PREFIX + "Better and colder outside, stop fan");
+				log.debug(PREFIX + "Better but colder outside, stop fan");
 				return false;
 			}
 		} else {
@@ -43,7 +43,7 @@ public class RoofFanTemperatureControl extends RoofFan {
 	}
 
 	private boolean neutralTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 0.3) {
+		if (howMuchDrierOutside > 1) {
 			log.debug(PREFIX + "Enough better outside, start fan");
 			return true;
 		} else {
@@ -53,10 +53,10 @@ public class RoofFanTemperatureControl extends RoofFan {
 	}
 
 	private boolean summerTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 3) {
+		if (howMuchDrierOutside > 5) {
 			log.debug(PREFIX + "Lot better outside, start fan");
 		}
-		if (howMuchDrierOutside > 0) {
+		if (howMuchDrierOutside > 1) {
 			if (howMuchVarmerOutside < 0) {
 				log.debug(PREFIX + "Better and colder outside, start fan");
 				return true;

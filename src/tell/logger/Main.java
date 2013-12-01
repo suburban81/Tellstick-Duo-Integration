@@ -25,6 +25,8 @@ public class Main {
 				tellController.runRoofHumidity();
 			} else if (args[0].equals(Tasks.ROOF_HUMIDITY_TEMP_CONTROL.name())) {
 				tellController.runRoofHumidityTempControl();
+			} else if (args[0].equals(Tasks.ROOF_HUMIDITY_RESTRICTIVE.name())) {
+				tellController.runRoofHumidityRestrictive();
 			} else if (args[0].equals(Tasks.SETUP_DB.name())) {
 				tellController.createDbTables();
 			} else {
