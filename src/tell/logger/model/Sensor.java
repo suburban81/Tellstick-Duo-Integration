@@ -102,7 +102,7 @@ public class Sensor {
 
 			return calcAbsoluteHumidity(thisTemp, relativeHumidity);
 		}
-		return null;
+		return 999d;
 	}
 
 	public Double calcAbsoluteHumidity(Double temp, Double relativeHumidity) {

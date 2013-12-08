@@ -67,7 +67,10 @@ public abstract class RoofFan {
 			}
 		}
 
-		log.debug("Result from exec: " + result);
+		if (result != 0) {
+			log.warn("Unexpected result from exec: " + result);
+		}
+
 		if (!"".equals(exec.getStandardErrorFromCommand().toString())) {
 			log.error(PREFIX + "Unexpected answer from exec roof fan! " + exec.getStandardErrorFromCommand().toString());
 		}
