@@ -25,15 +25,15 @@ public class RoofFanTemperatureControl extends RoofFan {
 	}
 
 	private boolean winterTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 1.5) {
+		if (howMuchDrierOutside > 1) {
 			log.debug(PREFIX + "Lot better outside, start fan");
 		}
-		if (howMuchDrierOutside > 0) {
+		if (howMuchDrierOutside > 0.1) {
 			if (howMuchVarmerOutside > 0) {
 				log.debug(PREFIX + "Better and warmer outside, start fan");
 				return true;
 			} else {
-				log.debug(PREFIX + "Better and colder outside, stop fan");
+				log.debug(PREFIX + "Better but colder outside, stop fan");
 				return false;
 			}
 		} else {
@@ -56,7 +56,7 @@ public class RoofFanTemperatureControl extends RoofFan {
 		if (howMuchDrierOutside > 3) {
 			log.debug(PREFIX + "Lot better outside, start fan");
 		}
-		if (howMuchDrierOutside > 0) {
+		if (howMuchDrierOutside > 0.3) {
 			if (howMuchVarmerOutside < 0) {
 				log.debug(PREFIX + "Better and colder outside, start fan");
 				return true;

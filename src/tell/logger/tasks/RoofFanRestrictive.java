@@ -43,7 +43,7 @@ public class RoofFanRestrictive extends RoofFan {
 	}
 
 	private boolean neutralTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 1) {
+		if (howMuchDrierOutside > 2.5) {
 			log.debug(PREFIX + "Enough better outside, start fan");
 			return true;
 		} else {
@@ -56,7 +56,7 @@ public class RoofFanRestrictive extends RoofFan {
 		if (howMuchDrierOutside > 5) {
 			log.debug(PREFIX + "Lot better outside, start fan");
 		}
-		if (howMuchDrierOutside > 1) {
+		if (howMuchDrierOutside > 3) {
 			if (howMuchVarmerOutside < 0) {
 				log.debug(PREFIX + "Better and colder outside, start fan");
 				return true;
@@ -65,7 +65,7 @@ public class RoofFanRestrictive extends RoofFan {
 				return false;
 			}
 		} else {
-			log.debug(PREFIX + "Better inside, stop fan");
+			log.debug(PREFIX + "Enough better inside, stop fan");
 			return false;
 		}
 	}
