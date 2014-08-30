@@ -14,11 +14,16 @@ public class RoofFanDefault extends RoofFan {
 	@Override
 	protected boolean betterOutside(Sensor roof, Sensor outside) {
 		if (roof.getAbsoluteHumidity() > outside.getAbsoluteHumidity()) {
-			log.debug(PREFIX + "Better outside, start fan");
+			logFan("Better outside", true);
 			return true;
 		} else {
-			log.debug(PREFIX + "Better inside, stop fan");
+			logFan("Better inside", false);
 			return false;
 		}
+	}
+	
+	@Override
+	protected String getPrefix() {
+		return PREFIX;
 	}
 }

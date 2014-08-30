@@ -85,6 +85,18 @@ public abstract class RoofFan {
 		log.info(sb.toString());
 	}
 
+	protected void logFan(String message, boolean startFan) {
+		if (startFan) {
+			log.debug(getPrefix() + "start fan - " + message);
+		} else {
+			log.debug(getPrefix() + "stop fan  - " + message);
+		}
+	}
+
+	protected String getPrefix() {
+		return PREFIX;
+	}
+
 	private boolean hasBasicRequirements(Sensor roof, Sensor outside) {
 		if (roof.updatedLastMinutes(40)) {
 			log.error(PREFIX + "Roof sensor has not been updated, could not run fan");

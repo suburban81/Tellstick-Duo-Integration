@@ -26,47 +26,54 @@ public class RoofFanTemperatureControl extends RoofFan {
 
 	private boolean winterTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
 		if (howMuchDrierOutside > 1) {
-			log.debug(PREFIX + "Lot better outside, start fan");
+			logFan("Lot better outside", true);
+			return true;
 		}
 		if (howMuchDrierOutside > 0.1) {
 			if (howMuchVarmerOutside > 0) {
-				log.debug(PREFIX + "Better and warmer outside, start fan");
+				logFan("Better and warmer outside", true);
 				return true;
 			} else {
-				log.debug(PREFIX + "Better but colder outside, stop fan");
+				logFan("Better but colder outside", false);
 				return false;
 			}
 		} else {
-			log.debug(PREFIX + "Better inside, stop fan");
+			logFan("Better inside", false);
 			return false;
 		}
 	}
 
 	private boolean neutralTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 0.3) {
-			log.debug(PREFIX + "Enough better outside, start fan");
+		if (howMuchDrierOutside > 1.5) {
+			logFan("Enough better outside", true);
 			return true;
 		} else {
-			log.debug(PREFIX + "Enough better inside, stop fan");
+			logFan("Enough better inside", false);
 			return false;
 		}
 	}
 
 	private boolean summerTimeFan(Double howMuchDrierOutside, Double howMuchVarmerOutside) {
-		if (howMuchDrierOutside > 3) {
-			log.debug(PREFIX + "Lot better outside, start fan");
+		if (howMuchDrierOutside > 6) {
+			logFan("Lot better outside", true);
+			return true;
 		}
-		if (howMuchDrierOutside > 0.3) {
+		if (howMuchDrierOutside > 3) {
 			if (howMuchVarmerOutside < 0) {
-				log.debug(PREFIX + "Better and colder outside, start fan");
+				logFan("Better and colder outside", true);
 				return true;
 			} else {
-				log.debug(PREFIX + "Better but warmer outside, stop fan");
+				logFan("Better but warmer outside", false);
 				return false;
 			}
 		} else {
-			log.debug(PREFIX + "Better inside, stop fan");
+			logFan("Enough better inside", false);
 			return false;
 		}
+	}
+	
+	@Override
+	protected String getPrefix() {
+		return PREFIX;
 	}
 }
