@@ -42,6 +42,7 @@ public class LightsTimer {
 	}
 
 	private void execute(List<String> commands) {
+		log.info("About to turn " + commands.get(1) + " light " + commands.get(2));
 		SystemCommandExecutor exec = null;
 		int result = -9999;
 		exec = new SystemCommandExecutor(commands);
@@ -53,10 +54,10 @@ public class LightsTimer {
 			log.error("Failed to change light " + commands.get(2), e);
 		}
 
-		if (!" - Success".contains(exec.getStandardOutputFromCommand().toString())) {
+		if (!exec.getStandardOutputFromCommand().toString().contains(" - Success")) {
 			log.error("Failed to execute command on light " + commands.get(2) + "! " + exec.getStandardOutputFromCommand().toString());
 		}
-		
+
 		if (result != 0) {
 			log.warn("Unexpected result from exec: " + result);
 		}

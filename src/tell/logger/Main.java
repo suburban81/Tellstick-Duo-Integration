@@ -46,7 +46,7 @@ public class Main {
 
 	private static List<String> readLightsInput(String[] args) {
 		List<String> lights = new ArrayList<String>();
-		for (int i = 1; i <= args.length; i++) {
+		for (int i = 1; i <= args.length - 1; i++) {
 			lights.add(args[i]);
 		}
 		return lights;
