@@ -29,4 +29,19 @@ public class LightsTimeDecisionTest {
 	public void testEndOfMonthDusk() throws Exception {
 		assertThat(lightsDecision.decide(DateTime.parse("2014-12-30T09:10:05Z")), is(LightsDecision.Decision.ON));
 	}
+	
+	@Test
+	public void testWeekendMornings() throws Exception {
+		assertThat(lightsDecision.decide(DateTime.parse("2014-09-06T06:05:05Z")), is(LightsDecision.Decision.OFF));
+		assertThat(lightsDecision.decide(DateTime.parse("2014-09-06T06:40:05Z")), is(LightsDecision.Decision.OFF));
+		assertThat(lightsDecision.decide(DateTime.parse("2014-09-06T06:45:05Z")), is(LightsDecision.Decision.ON));
+	}
+	
+	@Test
+	public void testNormalMornings() throws Exception {
+		assertThat(lightsDecision.decide(DateTime.parse("2014-09-05T05:55:05Z")), is(LightsDecision.Decision.OFF));
+		assertThat(lightsDecision.decide(DateTime.parse("2014-09-05T06:05:05Z")), is(LightsDecision.Decision.ON));
+	}
+	
+	
 }
