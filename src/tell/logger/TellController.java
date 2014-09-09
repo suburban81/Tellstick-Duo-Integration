@@ -1,9 +1,12 @@
 package tell.logger;
 
 import java.io.IOException;
+import java.util.List;
 
 import tell.logger.api.TellStickDuo;
 import tell.logger.dao.JdbcSQLite;
+import tell.logger.lights.time.LightsTimeDescision;
+import tell.logger.tasks.LightsTimer;
 import tell.logger.tasks.LogSensors;
 import tell.logger.tasks.RoofFan;
 import tell.logger.tasks.RoofFanDefault;
@@ -46,5 +49,13 @@ public class TellController {
 	public void runRoofHumidityRestrictive() throws IOException, InterruptedException {
 		RoofFan roofFan = new RoofFanRestrictive(duo);
 		roofFan.execute();
+	}
+
+	public void runIndoorLightsTask(List<String> lights) {
+		new LightsTimer().turnOnOffLights(lights, new LightsTimeDescision());
+	}
+
+	public void runOutdoorLightsTask(List<String> lights) {
+		new LightsTimer().turnOnOffLights(lights, new LightsTimeDescision());
 	}
 }

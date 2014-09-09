@@ -1,5 +1,8 @@
 package tell.logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import tell.logger.tasks.Tasks;
@@ -18,7 +21,6 @@ public class Main {
 		TellController tellController = new TellController();
 
 		try {
-
 			if (args[0].equals(Tasks.LOG_SENSORS.name())) {
 				tellController.runSensorTask();
 			} else if (args[0].equals(Tasks.ROOF_HUMIDITY.name())) {
@@ -27,6 +29,10 @@ public class Main {
 				tellController.runRoofHumidityTempControl();
 			} else if (args[0].equals(Tasks.ROOF_HUMIDITY_RESTRICTIVE.name())) {
 				tellController.runRoofHumidityRestrictive();
+			} else if (args[0].equals(Tasks.INDOOR_LIGHTS.name())) {
+				tellController.runIndoorLightsTask(readLightsInput(args));
+			} else if (args[0].equals(Tasks.OUTDOOR_LIGHTS.name())) {
+				tellController.runOutdoorLightsTask(readLightsInput(args));
 			} else if (args[0].equals(Tasks.SETUP_DB.name())) {
 				tellController.createDbTables();
 			} else {
@@ -37,4 +43,13 @@ public class Main {
 			throw e;
 		}
 	}
+
+	private static List<String> readLightsInput(String[] args) {
+		List<String> lights = new ArrayList<String>();
+		for (int i = 1; i <= args.length - 1; i++) {
+			lights.add(args[i]);
+		}
+		return lights;
+	}
+
 }
