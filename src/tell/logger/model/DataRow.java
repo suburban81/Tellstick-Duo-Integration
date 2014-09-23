@@ -18,6 +18,10 @@ public class DataRow {
 		for (String val : values) {
 			line.append(val + ",");
 		}
+		if (line.lastIndexOf(",") != -1) {
+			line.deleteCharAt(line.lastIndexOf(","));
+		}
+		line.append(System.lineSeparator());
 		return line.toString();
 	}
 

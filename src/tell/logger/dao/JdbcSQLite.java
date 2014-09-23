@@ -35,6 +35,9 @@ public class JdbcSQLite {
 	}
 
 	public List<DataRow> loadTempHumidityPerDay() {
+		Connection connection = null;
+		ResultSet result = null;
+
 		StringBuilder sql = new StringBuilder();
 		sql.append("select ");
 		sql.append("vind.logTime as time, ");
@@ -56,19 +59,26 @@ public class JdbcSQLite {
 		sql.append("order by ");
 		sql.append("vind.logTime asc ");
 
-		ResultSet results = select(sql.toString());
-
 		List<DataRow> rows = new ArrayList<DataRow>();
 		rows.add(new DataRow("Datum", "Vind temp", "Vind fukt", "Vind absolut fukt", "Ute temp", "Ute fukt", "Ute absolut fukt", "Kallare temp", "Kallare fukt", "Kallare absolut fukt", "Entre temp",
 				"Entre fukt", "Entre absolut fukt"));
 
 		try {
-			while (results.next()) {
-				rows.add(new DataRow(results.getString(0), results.getString(1), results.getString(2), results.getString(3), results.getString(4), results.getString(5), results.getString(6), results
-						.getString(7), results.getString(8), results.getString(9), results.getString(10), results.getString(12), results.getString(13)));
+			connection = DriverManager.getConnection(jdbcConnection);
+			result = connection.createStatement().executeQuery(sql.toString());
+			while (result.next()) {
+				rows.add(new DataRow(result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6), result.getString(7), result
+						.getString(8), result.getString(9), result.getString(10), result.getString(12), result.getString(13)));
 			}
 		} catch (SQLException e) {
 			log.error(e);
+		} finally {
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				log.error(e);
+			}
 		}
 
 		return rows;
@@ -91,22 +101,4 @@ public class JdbcSQLite {
 		}
 	}
 
-	private ResultSet select(String sql) {
-		Connection connection = null;
-		ResultSet result = null;
-		try {
-			connection = DriverManager.getConnection(jdbcConnection);
-			result = connection.createStatement().executeQuery(sql);
-		} catch (SQLException e) {
-			log.error(e);
-		} finally {
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException e) {
-				log.error(e);
-			}
-		}
-		return result;
-	}
 }
