@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<script type="text/javascript" src="js/dygraph-combined.js"></script>
+	</head>
+	<body>
+		<div id="graph" style="width:100%; height:100%;"></div>
+
+		<table>
+			<tbody>
+				<tr>
+					<td>
+					    <input type=checkbox id="0" onClick="change(this)">
+					    <label for="0"> Vind temp</label>
+					</td>
+					<td>
+					    <input type=checkbox id="1" checked onClick="change(this)">
+					    <label for="1"> Vind fukt</label>
+					</td>
+					<td>
+					    <input type=checkbox id="2" onClick="change(this)">
+					    <label for="2"> Vind absolut fukt</label>
+					</td>
+				</tr>
+				<tr>
+					<td>    
+					    <input type=checkbox id="3" onClick="change(this)">
+					    <label for="3"> Ute temp</label>
+					</td>
+					<td>    
+					    <input type=checkbox id="4" checked onClick="change(this)">
+					    <label for="4"> Ute fukt</label>
+					</td>
+					<td>    
+					    <input type=checkbox id="5" onClick="change(this)">
+					    <label for="5"> Ute absolut fukt</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					    <input type=checkbox id="6" onClick="change(this)">
+					    <label for="6"> Kallare temp</label>
+					</td>
+					<td>
+					    <input type=checkbox id="7" checked onClick="change(this)">
+					    <label for="7"> Kallare fukt</label>
+					</td>
+					<td>
+					    <input type=checkbox id="8" onClick="change(this)">
+					    <label for="8"> Kallare absolut fukt</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					    <input type=checkbox id="9" onClick="change(this)">
+					    <label for="9"> Entre temp</label>
+					</td>
+					<td>
+					    <input type=checkbox id="10" checked onClick="change(this)">
+					    <label for="10"> Entre fukt</label>
+					</td>
+					<td>
+					    <input type=checkbox id="11" onClick="change(this)">
+					    <label for="11"> Entre absolut fukt</label>
+					</td>
+				</tr>
+		    </tbody>
+	    </table>
+		
+		<script type="text/javascript">
+		  g = new Dygraph(document.getElementById("graph"), "csv/day.csv", 
+		    {
+		    	rollPeriod: 2,
+      			showRoller: true,
+      			visibility: [false, true, false,
+      						 false, true, false,
+      						 false, true, false,
+      						 false, true, false]
+			 }
+		  );
+	
+	      function change(el) {
+	        g.setVisibility(parseInt(el.id), el.checked);
+	        setStatus();
+	      }
+		</script>
+	</body>
+</html>
