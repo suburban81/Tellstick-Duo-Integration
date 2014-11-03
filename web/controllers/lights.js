@@ -1,13 +1,13 @@
 app.controller("LightsController", function ($scope, $http) {
 
-	$scope.turnOn = function (id) {
-		$http.get("../cgi-bin/turnon.cgi?id=" + id).success(function () {
+	$scope.turnOn = function (id,hours) {
+		$http.get("../cgi-bin/turn.cgi?id=" + id + "&hours=" + hours + "&action=1").success(function () {
 			
 		});
 	};
 	
 	$scope.turnOff = function (id) {
-		$http.get("../cgi-bin/turnoff.cgi?id=" + id).success(function () {
+		$http.get("../cgi-bin/turn.cgi?id=" + id + "&hours=4&action=0").success(function () {
 			
 		});
 	};

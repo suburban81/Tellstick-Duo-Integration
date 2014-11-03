@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 
+import tell.logger.dao.ReadTimestampFile;
 import tell.logger.exec.SystemCommandExecutor;
 import tell.logger.lights.time.LightsDecision;
 import tell.logger.lights.time.LightsDecision.Decision;
@@ -14,6 +15,8 @@ import tell.logger.lights.time.LightsDecision.Decision;
 public class LightsTimer {
 
 	private static final Logger log = Logger.getLogger(LightsTimer.class);
+
+	private ReadTimestampFile readTimestampFile = new ReadTimestampFile();
 
 	public void turnOnOffLights(List<String> lights, LightsDecision... lightsDecisions) {
 		Decision decision;
@@ -33,12 +36,20 @@ public class LightsTimer {
 		List<String> commands = new LinkedList<String>();
 
 		for (String light : lights) {
-			commands.clear();
-			commands.add("tdtool");
-			commands.add(command);
-			commands.add(light);
-			execute(commands);
+			if (!hasManualOverride(light)) {
+				commands.clear();
+				commands.add("tdtool");
+				commands.add(command);
+				commands.add(light);
+				execute(commands);
+			} else {
+				log.info("Light " + light + " is manually set, leave it");
+			}
 		}
+	}
+
+	private boolean hasManualOverride(String light) {
+		return System.currentTimeMillis() > readTimestampFile.readMillis(light);
 	}
 
 	private void execute(List<String> commands) {
