@@ -34,6 +34,7 @@ public class Main {
 			} else if (args[0].equals(Tasks.OUTDOOR_LIGHTS.name())) {
 				tellController.runOutdoorLightsTask(readLightsInput(args));
 			} else if (args[0].equals(Tasks.WRITE_CSV_DAY.name())) {
+				log.warn("About to fire up task: " + args[0] +  ", filepath: " + args[1]);
 				tellController.writeCSVDay(args[1]);
 			} else if (args[0].equals(Tasks.SETUP_DB.name())) {
 				tellController.createDbTables();

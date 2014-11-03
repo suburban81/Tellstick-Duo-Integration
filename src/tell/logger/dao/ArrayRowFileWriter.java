@@ -16,14 +16,16 @@ public class ArrayRowFileWriter {
 	private static final Logger log = Logger.getLogger(ArrayRowFileWriter.class);
 
 	public void writeCSVFromArray(String filepath, List<DataRow> rows) {
+		log.info("About to write to CSV file: " + filepath);
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filepath), "utf-8"))) {
-			for(DataRow row:rows) {
+			for (DataRow row : rows) {
 				writer.write(row.commaSeparated());
 			}
 		} catch (IOException e) {
 			log.error("Failed to write file", e);
 			throw new IllegalStateException();
 		}
+		log.info("Finished with write to CSV file");
 	}
 
 }
