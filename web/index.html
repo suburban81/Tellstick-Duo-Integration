@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Södra torprundan 10</title>
+	<link rel="stylesheet"	href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js" type="text/javascript"></script>
+	<script src="app.js" type="text/javascript"></script>
+	<script src="controllers/lights.js" type="text/javascript"></script>
+</head>
+<body ng-app='LightsApp'>
+	<div id='content' ng-controller='LightsController' style="margin-left: 10px">
+		<h1>Lampor</h1>
+		
+		<h2>Vardagsrum</h2>
+		<div class="pure-form pure-form-stacked" ng-form="newCustomerForm">
+			<fieldset>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(2,3)">Tänd 3h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(2,8)">Tänd 8h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOff(2)">Släck</button>
+			</fieldset>
+		</div>
+		
+		<h2>Hall</h2>
+		<div class="pure-form pure-form-stacked" ng-form="newCustomerForm">
+			<fieldset>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(3,3)">Tänd 3h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(3,8)">Tänd 8h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOff(3)">Släck</button>
+			</fieldset>
+		</div>
+		
+		<h2>Kök</h2>
+		<div class="pure-form pure-form-stacked" ng-form="newCustomerForm">
+			<fieldset>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(4,3)">Tänd 3h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(4,8)">Tänd 8h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOff(4)">Släck</button>
+			</fieldset>
+		</div>
+		
+		<h2>Ute</h2>
+		<div class="pure-form pure-form-stacked" ng-form="newCustomerForm">
+			<fieldset>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(6,3)">Tänd 3h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOn(6,8)">Tänd 8h</button>
+				<button class="pure-button pure-button-primary" ng-click="turnOff(6)">Släck</button>
+			</fieldset>
+		</div>
+	</div>
+</body>
+</html>
