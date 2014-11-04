@@ -10,7 +10,7 @@ public class ReadTimestampFile {
 
 	private static final Logger log = Logger.getLogger(ReadTimestampFile.class);
 
-	public long readMillis(String light) {
+	public long readEpoch(String light) {
 		String epochStr = "-";
 		long epoch;
 		try {
@@ -24,7 +24,7 @@ public class ReadTimestampFile {
 			return 0;
 		}
 
-		return epoch * 1000l;
+		return epoch;
 	}
 
 }

@@ -49,7 +49,11 @@ public class LightsTimer {
 	}
 
 	private boolean hasManualOverride(String light) {
-		return System.currentTimeMillis() > readTimestampFile.readMillis(light);
+		long fileEpoch = readTimestampFile.readEpoch(light);
+		long currentEpoch = System.currentTimeMillis() / 1000;
+		long delta = fileEpoch - currentEpoch;
+		log.info(light + " - Curremt:" + currentEpoch + " Manual:" + fileEpoch + " Delta:" + delta);
+		return delta > 0;
 	}
 
 	private void execute(List<String> commands) {
